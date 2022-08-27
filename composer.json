@@ -1,0 +1,18 @@
+{
+    "name": "mspco/my-custom-php-framework",
+    "description": "micro mvc framwork for small php websites",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "MSPoulaei",
+            "email": "sadeghpoolaee@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "app\\": "./"
+        }
+    },
+    "require": {}
+}
