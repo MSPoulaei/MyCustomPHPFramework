@@ -6,8 +6,7 @@ class Router
 {
     protected array $routes=[];
     protected string $view_path;
-    protected string $main_layout_filename="main";
-    protected string $notfound_layout_filename="404";
+    protected string $notfound_view_filename="404";
     public function __construct(protected Request $request,protected  Response $response)
     {
         $this->view_path=Application::$APP_DIR."/views";
@@ -30,32 +29,43 @@ class Router
         $callback=$this->routes[$method][$path] ?? false;
         if ($callback===false){
             $this->response->setHTTPCode(404);
-            return $this->renderView($this->notfound_layout_filename);
+            return $this->renderView($this->notfound_view_filename);
         }
         elseif (is_string($callback)){
             return $this->renderView($callback);
+        }
+        elseif (is_array($callback)){
+            $callback[0]=new $callback[0]();
+            return call_user_func($callback,$this->request);
         }
         elseif(is_callable($callback)){
             return call_user_func($callback);
         }
 
         $this->response->setHTTPCode(404);
-        return $this->renderView($this->notfound_layout_filename);
+        return $this->renderView($this->notfound_view_filename);
     }
 
-    protected function renderView(string $view):string
+    public function renderView(string $view,string $layout="",array $params=[]):string
     {
-        return str_replace("{{content}}",$this->renderViewOnly($view),$this->renderLayout());
+        if ($layout===""){
+            $layout=Application::$MAIN_LAYOUT;
+        }
+        return str_replace("{{content}}",$this->renderViewOnly($view,$params),$this->renderLayout($layout));
     }
 
-    protected function renderLayout()
+    protected function renderLayout($layout)
     {
         ob_start();
-        require_once $this->view_path."/layouts/$this->main_layout_filename.php";
+        require_once $this->view_path."/layouts/$layout.php";
         return ob_get_clean();
     }
-    protected function renderViewOnly(string $view)
+    protected function renderViewOnly(string $view,array $params=[])
     {
+        foreach ($params as $key=>$value){
+            $$key=$value;
+        }
+
         ob_start();
         require_once $this->view_path."/$view.php";
         return ob_get_clean();
