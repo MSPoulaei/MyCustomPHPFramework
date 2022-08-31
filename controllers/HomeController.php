@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\core\Controller;
 use app\core\Request;
+use app\models\Contact;
 
 class HomeController extends Controller
 {
@@ -14,12 +15,16 @@ class HomeController extends Controller
 
     public function contact()
     {
-        return $this->view("contact");
+        return $this->view("contact",["model"=>new Contact()]);
     }
 
     public function handleContact(Request $request)
     {
-        return "<pre>". print_r($request->getBody()) ."</pre>";
+        $model=new Contact();
+        if($model->validate()){
+            return "success<br>" . "<pre>". print_r($request->getBody()) ."</pre>";
+        }
+        return $this->view("contact",["model"=>$model]);
     }
 
 }

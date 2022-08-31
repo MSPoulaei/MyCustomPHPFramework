@@ -7,12 +7,12 @@ use app\core\Rule;
 
 class Register extends Model
 {
-    public string $name;
-    public string $email;
-    public string $phone;
-    public string $password;
-    public string $confirmPassword;
-    public array $rules=[
+    public string $name="";
+    public string $email="";
+    public string $phone="";
+    public string $password="";
+    public string $confirmPassword="";
+    protected array $rules=[
         "name"=>[Rule::REQUIRED],
         "email"=>[Rule::REQUIRED,Rule::EMAIL],
         "phone"=>[Rule::REQUIRED,Rule::PHONE],
@@ -20,4 +20,14 @@ class Register extends Model
         "confirmPassword"=>[Rule::REQUIRED,[Rule::MATCH,"match"=>"password"]]
     ];
 
+    public function lables(): array
+    {
+        return [
+            "name"=>"Your Name",
+            "email"=>"Your Email",
+            "phone"=>"Your Phone Number",
+            "password"=>"Password",
+            "confirmPassword"=>"Confirm Password",
+        ];
+    }
 }

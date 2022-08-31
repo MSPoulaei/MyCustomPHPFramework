@@ -46,7 +46,7 @@ class Router
         return $this->renderView($this->notfound_view_filename);
     }
 
-    public function renderView(string $view,string $layout="",array $params=[]):string
+    public function renderView(string $view,array $params=[],string $layout=""):string
     {
         if ($layout===""){
             $layout=Application::$MAIN_LAYOUT;

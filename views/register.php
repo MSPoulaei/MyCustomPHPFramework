@@ -1,10 +1,15 @@
 <?php
-function showError(string $key) {
-    global $errors;
-    if(!empty($errors[$key]))
-        foreach ($errors[$key] as $error)
-            echo "<p>$error</p>";
-}
+
+use app\core\form\Form;
+use app\core\form\InputField;
+use app\core\form\InputType;
+
+//function showError(string $key) {
+//    global $errors;
+//    if(!empty($errors[$key]))
+//        foreach ($errors[$key] as $error)
+//            echo "<p>$error</p>";
+//}
 ?>
 <h1>Register</h1>
 <section class="vh-100" style="background-color: #eee;">
@@ -18,68 +23,77 @@ function showError(string $key) {
 
                                 <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
 
-                                <form action="" method="post" class="mx-1 mx-md-4">
-
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <input name="name" type="text" id="form3Example1c" class="form-control" />
-                                            <label class="form-label" for="form3Example1c">Your Name</label>
-                                            <?php showError("name");  ?>
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <input name="email" type="email" id="form3Example3c" class="form-control" />
-                                            <label class="form-label" for="form3Example3c">Your Email</label>
-                                            <?php showError("email");  ?>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <input name="phone" type="text" id="form3Example1c" class="form-control" />
-                                            <label class="form-label" for="form3Example1c">Your Phone</label>
-                                            <?php showError("phone");  ?>
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <input name="password" type="password" id="form3Example4c" class="form-control" />
-                                            <label class="form-label" for="form3Example4c">Password</label>
-                                            <?php showError("password");  ?>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-key fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <input name="confirmPassword" type="password" id="form3Example4cd" class="form-control" />
-                                            <label class="form-label" for="form3Example4cd">Repeat your password</label>
-                                            <?php showError("confirmPassword");  ?>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="form-check d-flex justify-content-center mb-5">
-                                        <input name="agreement" class="form-check-input me-2" type="checkbox" value="" id="form2Example3c" />
-                                        <label class="form-check-label" for="form2Example3">
-                                            I agree all statements in <a href="#!">Terms of service</a>
-                                        </label>
-                                    </div>
-
-                                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                        <button type="submit" class="btn btn-primary btn-lg">Register</button>
-                                    </div>
-
-                                </form>
+                                <?php $form= Form::Begin("","post") ?>
+                                <?php /** @var \app\core\Model $model */
+                                echo new InputField("name",$model)?>
+                                <?php echo new InputField("email",$model,InputType::EMAIL)?>
+                                <?php echo new InputField("phone",$model,InputType::NUMBER)?>
+                                <?php echo new InputField("password",$model, InputType::PASSWORD) ?>
+                                <?php echo new InputField("confirmPassword",$model, InputType::PASSWORD) ?>
+                                <?php $form->submitBtn("Register") ?>
+                                <?php $form->End();?>
+<!--                                <form action="" method="post" class="mx-1 mx-md-4">-->
+<!---->
+<!--                                    <div class="d-flex flex-row align-items-center mb-4">-->
+<!--                                        <i class="fas fa-user fa-lg me-3 fa-fw"></i>-->
+<!--                                        <div class="form-outline flex-fill mb-0">-->
+<!--                                            <input name="name" type="text" id="form3Example1c" class="form-control" />-->
+<!--                                            <label class="form-label" for="form3Example1c">Your Name</label>-->
+<!--                                            --><?php //showError("name");  ?>
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!---->
+<!--                                    <div class="d-flex flex-row align-items-center mb-4">-->
+<!--                                        <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>-->
+<!--                                        <div class="form-outline flex-fill mb-0">-->
+<!--                                            <input name="email" type="email" id="form3Example3c" class="form-control" />-->
+<!--                                            <label class="form-label" for="form3Example3c">Your Email</label>-->
+<!--                                            --><?php //showError("email");  ?>
+<!---->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!---->
+<!--                                    <div class="d-flex flex-row align-items-center mb-4">-->
+<!--                                        <i class="fas fa-user fa-lg me-3 fa-fw"></i>-->
+<!--                                        <div class="form-outline flex-fill mb-0">-->
+<!--                                            <input name="phone" type="text" id="form3Example1c" class="form-control" />-->
+<!--                                            <label class="form-label" for="form3Example1c">Your Phone</label>-->
+<!--                                            --><?php //showError("phone");  ?>
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!---->
+<!--                                    <div class="d-flex flex-row align-items-center mb-4">-->
+<!--                                        <i class="fas fa-lock fa-lg me-3 fa-fw"></i>-->
+<!--                                        <div class="form-outline flex-fill mb-0">-->
+<!--                                            <input name="password" type="password" id="form3Example4c" class="form-control" />-->
+<!--                                            <label class="form-label" for="form3Example4c">Password</label>-->
+<!--                                            --><?php //showError("password");  ?>
+<!---->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!---->
+<!--                                    <div class="d-flex flex-row align-items-center mb-4">-->
+<!--                                        <i class="fas fa-key fa-lg me-3 fa-fw"></i>-->
+<!--                                        <div class="form-outline flex-fill mb-0">-->
+<!--                                            <input name="confirmPassword" type="password" id="form3Example4cd" class="form-control" />-->
+<!--                                            <label class="form-label" for="form3Example4cd">Repeat your password</label>-->
+<!--                                            --><?php //showError("confirmPassword");  ?>
+<!---->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!---->
+<!--                                    <div class="form-check d-flex justify-content-center mb-5">-->
+<!--                                        <input name="agreement" class="form-check-input me-2" type="checkbox" value="" id="form2Example3c" />-->
+<!--                                        <label class="form-check-label" for="form2Example3">-->
+<!--                                            I agree all statements in <a href="#!">Terms of service</a>-->
+<!--                                        </label>-->
+<!--                                    </div>-->
+<!---->
+<!--                                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">-->
+<!--                                        <button type="submit" class="btn btn-primary btn-lg">Register</button>-->
+<!--                                    </div>-->
+<!---->
+<!--                                </form>-->
 
                             </div>
                             <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">

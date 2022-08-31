@@ -20,7 +20,7 @@ class AuthController extends Controller
 
     public function register()
     {
-        return $this->view("register",layout: $this->layout);
+        return $this->view("register",["model"=>new Register()],layout: $this->layout);
     }
     public function registerPost(Request $request)
     {

@@ -65,6 +65,17 @@ abstract class Model
         }
         return empty($this->errors);
     }
+
+    abstract public function lables():array;
+
+    public function getLable(string $attribute)
+    {
+        return $this->lables()[$attribute] ?? $attribute;
+    }
+    public function hasError(string $attribute)
+    {
+        return $this->errors[$attribute] ?? false;
+    }
 }
 
 enum Rule: string
