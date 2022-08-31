@@ -13,7 +13,7 @@ abstract class Model
         }
     }
 
-    protected array $rules = [];
+    abstract protected function rules():array;
 
     protected function errorMessages(): array
     {
@@ -23,7 +23,8 @@ abstract class Model
             Rule::PHONE->name => 'This field must be valid phone number',
             Rule::MIN_LENGTH->name => 'Min length of this field must be {min}',
             Rule::MAX_LENGTH->name => 'Max length of this field must be {max}',
-            Rule::MATCH->name => 'This field must be the same as {match}'
+            Rule::MATCH->name => 'This field must be the same as {match}',
+            Rule::UNIQUE->name => 'A record with the same {unique} already exists'
         ];
     }
 
@@ -32,7 +33,7 @@ abstract class Model
     public function validate()
     {
         $errorMessages = $this->errorMessages();
-        foreach ($this->rules as $attribute => $rules) {
+        foreach ($this->rules() as $attribute => $rules) {
             $value = $this->{$attribute};
             foreach ($rules as $rule) {
                 $ruleName = $rule;
@@ -50,6 +51,14 @@ abstract class Model
                     || ($ruleName === Rule::MAX_LENGTH && strlen($value) > $rule["max"])
 
                     || ($ruleName === Rule::MATCH && $value !== $this->{$rule["match"]});
+
+                if($ruleName===Rule::UNIQUE){
+                    $className=$rule["class"];
+                    if($className::findOne([$attribute=>$value])){
+                        $notValid=true;
+
+                    }
+                }
 
                 if ($notValid) {
                     $errorMsg=$errorMessages[$ruleName->name];
@@ -76,6 +85,8 @@ abstract class Model
     {
         return $this->errors[$attribute] ?? false;
     }
+
+
 }
 
 enum Rule: string
@@ -86,4 +97,5 @@ enum Rule: string
     case MIN_LENGTH = "min";
     case MAX_LENGTH = "max";
     case MATCH = "match";
+    case UNIQUE = "unique";
 }

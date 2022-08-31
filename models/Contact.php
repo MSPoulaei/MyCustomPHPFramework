@@ -10,11 +10,6 @@ class Contact extends Model
     public string $subject='';
     public string $email='';
     public string $body='';
-    protected array $rules=[
-        "subject"=>[Rule::REQUIRED],
-        "email"=>[Rule::REQUIRED,Rule::EMAIL],
-        "body"=>[Rule::REQUIRED]
-    ];
 
     public function lables(): array
     {
@@ -24,5 +19,14 @@ class Contact extends Model
             "body"=>"Body"
         ];
 
+    }
+
+    protected function rules(): array
+    {
+        return [
+            "subject"=>[Rule::REQUIRED],
+            "email"=>[Rule::REQUIRED,Rule::EMAIL],
+            "body"=>[Rule::REQUIRED]
+        ];
     }
 }

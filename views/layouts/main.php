@@ -35,6 +35,12 @@
         </div>
     </div>
 </nav>
+
+
+<div class="alert alert-success">
+    asf
+</div>
+
 <div class="container">
     {{content}}
 </div>
