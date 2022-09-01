@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title><?= $this->title ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
 </head>
 <body>
@@ -24,8 +24,11 @@
                     <a class="nav-link" href="/contact">Contacts</a>
                 </li>
             </ul>
-            <?php if(\app\core\Application::$App->user):?>
+            <?php if(!\app\core\Application::$App->isGuest()):?>
                 <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile">Profile</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" >Hello <?= \app\core\Application::$App->user->getFullName() ?>!</a>
                     </li>

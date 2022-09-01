@@ -11,12 +11,15 @@ class Application
     public Request $request;
     public Response $response;
     public Session $session;
+    public View $view;
     public static Application $App;
     public static Database $db;
     public static string $APP_DIR;
     public static string $MAIN_LAYOUT;
     public ?UserModel $user;
     protected string $userClass;
+    public Controller $currentController;
+    public string $currentAction;
 
     public function __construct(string $appDir, array $config)
     {
@@ -27,6 +30,7 @@ class Application
         $this->request = new Request();
         $this->response = new Response();
         $this->session = new Session();
+        $this->view = new View();
         $this->router = new Router($this->request, $this->response);
         $this->userClass = $config["userclass"];
 
@@ -43,7 +47,17 @@ class Application
 
     public function run()
     {
-        echo $this->router->resolve();
+        try {
+            echo $this->router->resolve();
+        } catch (\Exception $e) {
+            $this->response->setHTTPCode($e->getCode());
+            echo $this->view->renderView("error",params: ["exception"=>$e]);
+        }
+    }
+
+    public function isGuest()
+    {
+        return !$this->user;
     }
 
     public function login($user)

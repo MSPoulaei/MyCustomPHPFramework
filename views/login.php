@@ -1,4 +1,6 @@
 <?php
+$this->title="Login";
+
 ?>
 <h1>Login</h1>
 <section class="vh-100">

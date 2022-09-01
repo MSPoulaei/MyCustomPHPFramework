@@ -3,6 +3,7 @@
 use app\core\form\Form;
 use app\core\form\InputField;
 use app\core\form\InputType;
+$this->title="Register";
 
 //function showError(string $key) {
 //    global $errors;
