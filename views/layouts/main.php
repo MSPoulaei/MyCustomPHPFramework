@@ -24,6 +24,16 @@
                     <a class="nav-link" href="/contact">Contacts</a>
                 </li>
             </ul>
+            <?php if(\app\core\Application::$App->user):?>
+                <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" >Hello <?= \app\core\Application::$App->user->getFullName() ?>!</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                </ul>
+            <?php else: ?>
             <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/login">Login</a>
@@ -32,15 +42,16 @@
                     <a class="nav-link" href="/register">Register</a>
                 </li>
             </ul>
+            <?php endif; ?>
         </div>
     </div>
 </nav>
 
-
-<div class="alert alert-success">
-    asf
-</div>
-
+<?php if(\app\core\Application::$App->session->getFlash("success")):?>
+    <div class="alert alert-success">
+        <?=\app\core\Application::$App->session->getFlash("success") ?>
+    </div>
+<?php endif; ?>
 <div class="container">
     {{content}}
 </div>

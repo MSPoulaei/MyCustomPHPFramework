@@ -5,8 +5,9 @@ namespace app\models;
 use app\core\database\DbModel;
 use app\core\Model;
 use app\core\Rule;
+use app\core\UserModel;
 
-class User extends DbModel
+class User extends UserModel
 {
     public string $name = "";
     public string $email = "";
@@ -52,6 +53,10 @@ class User extends DbModel
     {
         return "users";
     }
+    public  static function primaryKey(): string
+    {
+        return "id";
+    }
 
     protected function attributes(): array
     {
@@ -62,6 +67,11 @@ class User extends DbModel
             "password",
             "status"
         ];
+    }
+
+    public function getFullName(): string
+    {
+        return $this->name;
     }
 }
 

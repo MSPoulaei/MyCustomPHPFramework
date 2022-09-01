@@ -11,6 +11,7 @@ $dotenv = Dotenv\Dotenv::createImmutable($APPLICATION_ROOT_PATH);
 $dotenv->load();
 
 $config=[
+    "userclass"=>\app\models\User::class,
     "database"=>[
         "dsn"=>$_ENV["DB_HOST"],
         "username"=>$_ENV["DB_USERNAME"],
@@ -27,6 +28,7 @@ $app->router->post('/contact',[HomeController::class,"handleContact"]);
 
 $app->router->get('/login',[AuthController::class,"login"]);
 $app->router->post('/login',[AuthController::class,"loginPost"]);
+$app->router->get('/logout',[AuthController::class,"logout"]);
 
 $app->router->get('/register',[AuthController::class,"register"]);
 $app->router->post('/register',[AuthController::class,"registerPost"]);

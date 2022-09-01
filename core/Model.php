@@ -28,8 +28,12 @@ abstract class Model
         ];
     }
 
-    public array $errors = [];
+    protected array $errors = [];
 
+    public function AddErrorMessage(string $attribute,string $message)
+    {
+        $this->errors[$attribute][]=$message;
+    }
     public function validate()
     {
         $errorMessages = $this->errorMessages();

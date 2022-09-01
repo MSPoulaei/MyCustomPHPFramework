@@ -8,6 +8,7 @@ use app\core\Model;
 abstract class DbModel extends Model
 {
     abstract protected static function tableName():string;
+    abstract public static function primaryKey():string;
     abstract protected function attributes():array;
     public function save()
     {
